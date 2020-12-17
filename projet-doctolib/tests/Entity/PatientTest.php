@@ -3,6 +3,7 @@
 namespace App\Tests\Entity;
 
 use App\Entity\Patient;
+use App\Entity\RendezVous;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class PatientTest extends KernelTestCase
@@ -80,12 +81,27 @@ class PatientTest extends KernelTestCase
     
     }
 // ***************** TEST Méthodes relationelles ******************************
+    public function testGetEmptyRdv(){
+        $patient = $this->getPatient("Dupont", "David", 18);
+        $this->assertCount(0, $patient->getRdv());
+    }
 
-public function testAddRdv(){
-    $patient = $this->getPatient("Dupont", "David", 18);
-    $rdv= (new RendezVous())->setDate('podologie');
-    $docteur->addSpecialite($specialite);
-    $this->assertEquals(['pédiatrie', 'cardiologie', 'podologie'], $docteur->getSpecialites());
-}
+    public function testGetNotEmptyRdv(){
+        $patient = $this->getPatient("Dupont", "David", 18);
+        $rdv= (new RendezVous())->setDate(new \DateTime ("18-12-2020 14:15"))->setAdresse("404 rue de la liberté");
+        $patient->addRdv($rdv);
+        $this->assertCount(1,$patient->getRdv());
+        $this->assertEquals($patient,$rdv->getPatient());
+    }
+
+    public function testRemoveRdv(){
+        $patient = $this->getPatient("Dupont", "David", 18);
+        $rdv= (new RendezVous())->setDate(new \DateTime ("18-12-2020 14:15"))->setAdresse("404 rue de la liberté");
+        $patient->addRdv($rdv);
+        $this->assertCount(1, $patient->getRdv());
+        $patient->removeRdv($rdv);
+        $this->assertCount(0, $patient->getRdv());
+        $this->assertEquals(null, $rdv->getPatient());
+    }
 
 }
