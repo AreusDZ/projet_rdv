@@ -79,5 +79,13 @@ class PatientTest extends KernelTestCase
         $this->assertCount(3, $errors);
     
     }
+// ***************** TEST Méthodes relationelles ******************************
+
+public function testAddRdv(){
+    $patient = $this->getPatient("Dupont", "David", 18);
+    $rdv= (new RendezVous())->setDate('podologie');
+    $docteur->addSpecialite($specialite);
+    $this->assertEquals(['pédiatrie', 'cardiologie', 'podologie'], $docteur->getSpecialites());
+}
 
 }
