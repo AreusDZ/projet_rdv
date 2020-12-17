@@ -15,14 +15,14 @@ class PatientRepositoryTest extends KernelTestCase {
 
     private $repository;
 
-    protected function setUp(){
+    protected function setUp(): void{
         self::bootKernel();
         $this->repository = self::$container->get(PatientRepository::class);
     }
 
     public function testFindBy(){
         $this->loadFixtures([PatientFixtures::class]);
-        $patient = $this->repository->findBy(["nom" => "David 1"]);
+        $patient = $this->repository->findByNom(["David 1"]);
         $this->assertCount(1, $patient);
     }
     
@@ -33,13 +33,13 @@ class PatientRepositoryTest extends KernelTestCase {
         $this->loadFixtures([PatientFixtures::class]);
         $patient = $this->repository->findAll();
 
-        $this->assertCount(5, $patient);
+        $this->assertCount(6, $patient);
         // execution du tearDown ..
     }
 
     public function testManagerPersist(){
         $this->loadFixtures([AppFixtures::class]);
-        $patient = (new Patient())->setNom("test")->setPrenom("TEST")->setAge(18);
+        $patient = (new Patient())->setNom("David")->setPrenom("Dupont")->setAge(20)->setEmail("sam@gmail.com")->setPassword("sam");
         $manager = self::$container->get("doctrine.orm.default_entity_manager");
         $manager->persist($patient);
         $manager->flush();
