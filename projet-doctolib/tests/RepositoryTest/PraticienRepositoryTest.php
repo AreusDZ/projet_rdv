@@ -2,14 +2,14 @@
 
 namespace App\Tests\Repository;
 
-use App\Entity\Patient;
+use App\Entity\Praticien;
 use App\DataFixtures\AppFixtures;
-use App\DataFixtures\PatientFixtures;
-use App\Repository\PatientRepository;
+use App\DataFixtures\PraticienFixtures;
+use App\Repository\PraticienRepository;
 use Liip\TestFixturesBundle\Test\FixturesTrait;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class PatientRepositoryTest extends KernelTestCase {
+class PraticienRepositoryTest extends KernelTestCase {
 
     use FixturesTrait;
 
@@ -17,31 +17,31 @@ class PatientRepositoryTest extends KernelTestCase {
 
     protected function setUp(): void{
         self::bootKernel();
-        $this->repository = self::$container->get(PatientRepository::class);
+        $this->repository = self::$container->get(PraticienRepository::class);
     }
 
     public function testFindBy(){
-        $this->loadFixtures([PatientFixtures::class]);
-        $patient = $this->repository->findByNom(["David 1"]);
-        $this->assertCount(1, $patient);
+        $this->loadFixtures([PraticienFixtures::class]);
+        $praticien = $this->repository->findByNom(["Dubois1"]);
+        $this->assertCount(1, $praticien);
     }
     
     public function testFindAll(){
 
         // Exécution du setUp ..
         // Insérer 5 clients
-        $this->loadFixtures([PatientFixtures::class]);
-        $patient = $this->repository->findAll();
+        $this->loadFixtures([PraticienFixtures::class]);
+        $praticien = $this->repository->findAll();
 
-        $this->assertCount(6, $patient);
+        $this->assertCount(6, $praticien);
         // execution du tearDown ..
     }
 
     public function testManagerPersist(){
         $this->loadFixtures([AppFixtures::class]);
-        $patient = (new Patient())->setNom("David")->setPrenom("Dupont")->setAge(20)->setEmail("sam@gmail.com")->setPassword("sam");
+        $praticien = (new Praticien())->setNom("Dubois")->setSpecialite("Podologue")->setEmail("sam@gmail.com")->setPassword("sam");
         $manager = self::$container->get("doctrine.orm.default_entity_manager");
-        $manager->persist($patient);
+        $manager->persist($praticien);
         $manager->flush();
 
         $this->assertCount(1, $this->repository->findAll());
