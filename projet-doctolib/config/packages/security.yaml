@@ -6,9 +6,16 @@ security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         # used to reload user from session & other features (e.g. switch_user)
-        app_user_provider:
+        chain_provider:
+            chain:
+                providers: [app_patient_provider, app_praticien_provider]
+        app_patient_provider:
             entity:
-                class: App\Entity\User
+                class: App\Entity\Patient
+                property: email
+        app_praticien_provider:
+            entity:
+                class: App\Entity\Praticien
                 property: email
     firewalls:
         dev:
@@ -16,7 +23,14 @@ security:
             security: false
         main:
             anonymous: lazy
-            provider: app_user_provider
+            provider: chain_provider
+            guard:
+                authenticators:
+                    - App\Security\AppCustomAuthenticator
+            logout:
+                path: app_logout
+                # where to redirect after logout
+                # target: app_any_route
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -29,3 +43,4 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+
