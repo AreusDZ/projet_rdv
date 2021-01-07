@@ -4,14 +4,16 @@ namespace App\Controller;
 
 use App\Entity\Patient;
 use App\Form\PatientType;
+use App\Security\AppCustomAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\DBAL\Exception\DriverException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use App\Controller\UserAuthentificatorAuthenticator;
+
 
 
 class PatientController extends AbstractController
@@ -28,7 +30,7 @@ class PatientController extends AbstractController
     /**
      * @Route("/AddPatient", name="AddPatient")
      */
-    public function addPatient(EntityManagerInterface $manager, Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, UserAuthentificatorAuthenticator $authenticator) :Response {
+    public function addPatient(EntityManagerInterface $manager, Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AppCustomAuthenticator $authenticator) :Response {
         $patient = new Patient();
         $form = $this->createForm(PatientType::class, $patient);
         $form->handleRequest($request);
@@ -52,7 +54,7 @@ class PatientController extends AbstractController
                     'main'
                 );
 
-            } catch (ServiceException $e) {
+            } catch (DriverException $e) {
                 return $this->render('main/index.html.twig', [
                     'error' => $e->getMessage(),
                 ]);
@@ -60,7 +62,7 @@ class PatientController extends AbstractController
             return $this->redirectToRoute('main');
         }
 
-        return $this->render('registration/AddNewPatient.html.twig', [
+        return $this->render('patient/AddPatient.html.twig', [
             'form' => $form->createView(),
         ]);
     }
