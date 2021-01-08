@@ -76,7 +76,7 @@ class RendezVous
         return $this->patient;
     }
 
-    public function setPatient( $patient): self
+    public function setPatient($patient): self
     {
         $this->patient = $patient;
 

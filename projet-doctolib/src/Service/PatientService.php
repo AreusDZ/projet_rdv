@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Patient;
+use App\Entity\PatientDTO;
 use App\Mapper\PatientMapper;
 use App\Repository\PatientRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -52,7 +53,15 @@ class PatientService {
             throw new PatientServiceException("Un problème est technique est servenu. Veuilllez réessayer ultérieurement.", $e->getCode());
         }
     }
-
+    public function persist(Patient $patient, PatientDTO $patientDTO) {
+        try {
+            $patient = $this->patientMapper->transformPatientDtoToPatientEntity($patientDTO, $patient);
+            $this->entityManager->persist($patient);
+            $this->entityManager->flush();
+        } catch (DriverException $e) {
+            throw new PatientServiceException($e->getMessage(), $e->getCode());
+        }
+    }
 
 
 }
