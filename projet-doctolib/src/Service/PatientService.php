@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-
+use App\Entity\Patient;
 use App\Mapper\PatientMapper;
 use App\Repository\PatientRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -34,5 +34,25 @@ class PatientService {
         }
         
     }
+
+    public function delete(Patient $patient){
+        try {
+            $this->entityManager->remove($patient);
+            $this->entityManager->flush();
+        } catch(DriverException $e){
+            throw new PatientServiceException("Un problème est technique est servenu. Veuilllez réessayer ultérieurement.", $e->getCode());
+        }
+    }
+
+    public function searchById(int $id){
+        try {
+            $patient = $this->repository->find($id);
+            return $this->patientMapper->transformePatientEntityToPatientDto($patient);
+        } catch(DriverException $e){
+            throw new PatientServiceException("Un problème est technique est servenu. Veuilllez réessayer ultérieurement.", $e->getCode());
+        }
+    }
+
+
 
 }

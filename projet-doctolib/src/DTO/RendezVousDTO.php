@@ -2,48 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\RendezVousRepository;
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-
-/**
- * @ORM\Entity(repositoryClass=RendezVousRepository::class)
- */
-class RendezVous
-{
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+class RendezVousDTO {
     private $id;
-
-    /**
-     * @ORM\Column(type="datetime")
-     * @Assert\NotBlank
-     */
     private $date;
-
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     * @Assert\NotBlank
-     */
     private $adresse;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Patient::class, inversedBy="rdv")
-     * @ORM\JoinColumn(nullable=false)
-     */
     private $patient;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Praticien::class, inversedBy="rdv")
-     * @ORM\JoinColumn(nullable=false)
-     */
     private $praticien;
 
-    public function getId(): ?int
-    {
+    
+
+    public function getId() :?Int {
         return $this->id;
     }
 
@@ -88,7 +56,7 @@ class RendezVous
         return $this->praticien;
     }
 
-    public function setPraticien($praticien): self
+    public function setPraticien( $praticien): self
     {
         $this->praticien = $praticien;
 
