@@ -15,6 +15,8 @@ class RendezVousDTO {
         return $this->id;
     }
 
+    
+
     public function getDate(): ?\DateTimeInterface
     {
         return $this->date;

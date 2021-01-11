@@ -5,7 +5,7 @@ namespace App\Mapper;
 use App\Entity\Patient;
 use App\Entity\Praticien;
 use App\Entity\RendezVous;
-use App\Entity\rendezVousDTO;
+use App\Entity\RendezVousDTO;
 
 
 class RendezVousMapper {
@@ -21,11 +21,14 @@ class RendezVousMapper {
     }
 
     public function transformeRendezVousEntityToRendezVousDto(RendezVous $rendezVous): RendezVousDTO{
-        $rendezVousDTO = new RendezVousDTO();
+      
+
+        $rendezVousDTO = new RendezVousDTO();            
         $rendezVousDTO->setDate($rendezVous->getDate());
         $rendezVousDTO->setAdresse($rendezVous->getAdresse());
         $rendezVousDTO->setPatient($rendezVous->getPatient()->getId());
         $rendezVousDTO->setPraticien($rendezVous->getPraticien()->getId());
+        
         return $rendezVousDTO;
     }
 }

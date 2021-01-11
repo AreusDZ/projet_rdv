@@ -71,24 +71,24 @@ class RendezVous
         return $this;
     }
 
-    public function getPatient()
+    public function getPatient():Patient
     {
         return $this->patient;
     }
 
-    public function setPatient($patient): self
+    public function setPatient(Patient $patient): self
     {
         $this->patient = $patient;
 
         return $this;
     }
 
-    public function getPraticien()
+    public function getPraticien():Praticien
     {
         return $this->praticien;
     }
 
-    public function setPraticien($praticien): self
+    public function setPraticien(Praticien $praticien): self
     {
         $this->praticien = $praticien;
 

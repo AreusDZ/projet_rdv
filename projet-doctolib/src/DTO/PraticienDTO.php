@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-class PraticienDTO {
+class PraticienDTO extends User {
     private $id;
     private $nom;
     private $specialite;

@@ -4,16 +4,20 @@ namespace App\Controller;
 
 
 use App\Entity\Praticien;
-use App\Mapper\PraticienMapper;
+use App\Entity\PraticienDTO;
 use FOS\RestBundle\View\View;
+use App\Mapper\PraticienMapper;
 use App\Service\PraticienService;
-use App\Service\PraticienServiceException;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Service\PraticienServiceException;
 use FOS\RestBundle\Controller\Annotations\Get;
+use FOS\RestBundle\Controller\Annotations\Put;
 use Symfony\Component\HttpFoundation\Response;
+use FOS\RestBundle\Controller\Annotations\Post;
 use Symfony\Component\Routing\Annotation\Route;
 use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
 class PraticienRestController extends AbstractFOSRestController
@@ -83,4 +87,33 @@ class PraticienRestController extends AbstractFOSRestController
         }
     }
 
+    /**
+     * @Post(PraticienRestController::URI_PRATICIEN_COLLECTION)
+     * @ParamConverter("praticienDTO", converter="fos_rest.request_body")
+     * @return void
+     */
+    public function create(PraticienDTO $praticienDTO) {
+        try {
+            $praticien = new Praticien();
+            $this->praticienService->persist($praticien, $praticienDTO);
+            return View::create([], Response::HTTP_CREATED, ["Content-type" => "application/json"]);
+        } catch (PraticienServiceException $e) {
+            return View::create($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR, ["Content-type" => "application/json"]);
+        }
+    }
+    
+    /**
+     * @Put(PraticienRestController::URI_PRATICIEN_INSTANCE)
+     * @ParamConverter("praticienDTO", converter="fos_rest.request_body")
+     * @param PraticienDTO $praticienDTO
+     * @return void
+     */
+    public function update(Praticien $praticien, PraticienDTO $praticienDTO) {
+        try {
+            $this->praticienService->persist($praticien, $praticienDTO);
+            return View::create([], Response::HTTP_OK, ["Content-type" => "application/json"]);
+        } catch (PraticienServiceException $e) {
+            return View::create($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR, ["Content-type" => "application/json"]);
+        }
+    }
 }

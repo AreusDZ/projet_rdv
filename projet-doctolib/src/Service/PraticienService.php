@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Praticien;
+use App\Entity\PraticienDTO;
 use App\Mapper\PraticienMapper;
 use App\Repository\PraticienRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -53,4 +54,13 @@ class PraticienService {
         }
     }
 
+    public function persist(Praticien $praticien, PraticienDTO $praticienDTO) {
+        try {
+            $praticien = $this->praticienMapper->transformePraticienDtoToPraticienEntity($praticienDTO, $praticien);
+            $this->entityManager->persist($praticien);
+            $this->entityManager->flush();
+        } catch (DriverException $e) {
+            throw new PraticienServiceException($e->getMessage(), $e->getCode());
+        }
+    }
 }
