@@ -1,0 +1,297 @@
+openapi: 3.0.0
+info:
+  title: 'Patient Management'
+  description: 'Patient manager (GET,PUT,DELETE,POST)'
+  version: '0.01'
+paths:
+  /patients:
+    get:
+      tags:
+        - Patient
+      summary: 'Returns a list of PatientDTO'
+      description: 'Returns a list of PatientDTO'
+      operationId: 'App\Controller\PatientRestController::searchAll'
+      responses:
+        '200':
+          description: 'Successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatientDTO'
+        '404':
+          description: 'If no PatientDTO found'
+        '500':
+          description: 'Internal server Error. Please contact us'
+    post:
+      tags:
+        - Patient
+      summary: 'Add a new PatientDTO'
+      description: 'Create a object of type PatientDTO'
+      operationId: 'App\Controller\PatientRestController::create'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+                nom:
+                  type: string
+                prenom:
+                  type: string
+                age:
+                  type: number
+                password:
+                  type: string
+              type: object
+              example:
+                email: exemple@gmail.com
+                nom: nomExemple
+                prenom: prenomExemple
+                age: 0
+                password: pwdExemple
+      responses:
+        '405':
+          description: 'Invalid request body'
+        '201':
+          description: 'Successfully created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatientDTO'
+        '500':
+          description: 'Internal server Error. Please contact us'
+  '/patient/{id}':
+    get:
+      tags:
+        - id
+      operationId: 'App\Controller\PatientRestController::searchById'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: 'The User'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatientDTO'
+        '500':
+          description: 'Internal server Error. Please contact us'
+        '404':
+          description: 'No user found for this id'
+    put:
+      tags:
+        - Patient
+      description: 'Modify an object of type PatientDTO'
+      operationId: 'App\Controller\PatientRestController::update'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+                nom:
+                  type: string
+                prenom:
+                  type: string
+                age:
+                  type: number
+                password:
+                  type: string
+              type: object
+              example:
+                email: exemple@gmail.com
+                nom: nomExemple
+                prenom: prenomExemple
+                age: 0
+                password: pwdExemple
+      responses:
+        '405':
+          description: 'Invalid input'
+        '200':
+          description: 'Successfully modified'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatientDTO'
+        '500':
+          description: 'Internal server Error. Please contact us'
+    delete:
+      tags:
+        - Patient
+      description: 'Delete aN object of type Patient'
+      operationId: 'App\Controller\PatientRestController::remove'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '204':
+          description: 'Successfully deleted'
+        '500':
+          description: 'Internal server Error. Please contact us'
+  /praticiens:
+    get:
+      tags:
+        - Praticien
+      summary: 'Returns a list of PraticienDTO'
+      description: 'Returns a list of PraticienDTO'
+      operationId: 'App\Controller\PraticienRestController::searchAll'
+      responses:
+        '200':
+          description: 'Successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PraticienDTO'
+        '404':
+          description: 'If no PraticienDTO found'
+        '500':
+          description: 'Internal server Error. Please contact us'
+    post:
+      tags:
+        - Praticien
+      summary: 'Add a new PraticienDTO'
+      description: 'Create an object of type PraticienDTO'
+      operationId: 'App\Controller\PraticienRestController::create'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+                nom:
+                  type: string
+                specialite:
+                  type: string
+                password:
+                  type: string
+              type: object
+              example:
+                email: exemple@gmail.com
+                nom: nomExemple
+                specialite: specialiteExemple
+                password: pwdExemple
+      responses:
+        '405':
+          description: 'Invalid request body'
+        '201':
+          description: 'Successfully created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PraticienDTO'
+        '500':
+          description: 'Internal server Error. Please contact us'
+  '/praticien/{id}':
+    get:
+      tags:
+        - id
+      operationId: 'App\Controller\PraticienRestController::searchById'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: 'The User'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PraticienDTO'
+        '500':
+          description: 'Internal server Error. Please contact us'
+        '404':
+          description: 'No user found for this id'
+    put:
+      tags:
+        - Praticien
+      description: 'Modify an object of type PraticienDTO'
+      operationId: 'App\Controller\PraticienRestController::update'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                email:
+                  type: string
+                nom:
+                  type: string
+                specialite:
+                  type: string
+                password:
+                  type: string
+              type: object
+              example:
+                email: exemple@gmail.com
+                nom: nomExemple
+                specialite: specialiteExemple
+                password: pwdExemple
+      responses:
+        '405':
+          description: 'Invalid input'
+        '200':
+          description: 'Successfully modified'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PraticienDTO'
+        '500':
+          description: 'Internal server Error. Please contact us'
+    delete:
+      tags:
+        - Praticien
+      description: 'Delete an object of type Praticien'
+      operationId: 'App\Controller\PraticienRestController::remove'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '204':
+          description: 'Successfully deleted'
+        '500':
+          description: 'Internal server Error. Please contact us'
+components:
+  schemas:
+    PatientDTO:
+      properties:
+        id:
+          type: number
+        nom:
+          type: string
+        prenom:
+          type: string
+        age:
+          type: number
+      type: object

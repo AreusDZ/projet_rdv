@@ -1,10 +1,26 @@
 <?php
 
 namespace App\Entity;
+use App\Entity\User;
+Use OpenApi\Annotations as OA;
 
 class PraticienDTO extends User {
+    /**
+    * @OA\Property(type="number")
+    * @var int
+    */
     private $id;
+
+    /**
+     * @OA\Property(type="string")
+     * @var string
+     */
     private $nom;
+
+    /**
+     * @OA\Property(type="string")
+     * @var string
+     */
     private $specialite;
     
 
