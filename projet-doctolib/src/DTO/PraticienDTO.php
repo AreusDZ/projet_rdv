@@ -4,6 +4,9 @@ namespace App\Entity;
 use App\Entity\User;
 Use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Schema()
+ */
 class PraticienDTO extends User {
     /**
     * @OA\Property(type="number")

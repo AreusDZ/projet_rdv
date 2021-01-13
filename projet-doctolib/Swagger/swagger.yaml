@@ -295,3 +295,12 @@ components:
         age:
           type: number
       type: object
+    PraticienDTO:
+      properties:
+        id:
+          type: number
+        nom:
+          type: string
+        specialite:
+          type: string
+      type: object
