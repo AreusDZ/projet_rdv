@@ -2,11 +2,30 @@
 
 namespace App\Entity;
 
+/**
+ * @OA\Schema()
+ */
 class RendezVousDTO {
+    /**
+     * @OA\Property(type="number")
+     * @var int
+     */
     private $id;
+
+    /**
+     * @OA\Property(type="string")
+     * @var string
+     */
     private $date;
+
+    /**
+     * @OA\Property(type="string")
+     * @var string
+     */
     private $adresse;
+
     private $patient;
+
     private $praticien;
 
     

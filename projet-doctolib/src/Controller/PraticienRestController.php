@@ -117,7 +117,7 @@ class PraticienRestController extends AbstractFOSRestController
       /** 
      * @OA\Get(
      *   path="/praticien/{id}",
-     *   tags={"id"},
+     *   tags={"Praticien"},
      *   @OA\Parameter(
      *     name="id",
      *     in="path",

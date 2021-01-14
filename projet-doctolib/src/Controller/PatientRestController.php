@@ -119,7 +119,7 @@ class PatientRestController extends AbstractFOSRestController
     /** 
      * @OA\Get(
      *   path="/patient/{id}",
-     *   tags={"id"},
+     *   tags={"Patient"},
      *   @OA\Parameter(
      *     name="id",
      *     in="path",

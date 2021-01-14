@@ -18,7 +18,13 @@ use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
-
+/**
+ * @OA\Info(
+ *      title="RendezVous Management",
+ *      description="RendezVous manager (GET,PUT,DELETE,POST)",
+ *      version="0.01",
+ * )
+ */
 class RendezVousRestController extends AbstractFOSRestController
 {
 
@@ -39,9 +45,28 @@ class RendezVousRestController extends AbstractFOSRestController
         $this->rendezVousMapper = $mapper;
     }
     
-    /**
-     * @Get(RendezVousRestController::URI_RENDEZVOUS_COLLECTION)
-     */
+     /**
+      *@OA\Get(
+      *     path="/rendezVouss",
+      *     tags={"RendezVous"},
+      *     summary="Returns a list of RendezVousDTO",
+      *     description="Returns a list of RendezVousDTO",
+      *     @OA\Response(
+      *         response=200,
+      *         description="Successful operation", 
+      *         @OA\JsonContent(ref="#/components/schemas/RendezVousDTO")   
+      *     ),
+      *      @OA\Response(
+      *         response=404,
+      *         description="If no RendezVousDTO found",    
+      *     ),
+      *      @OA\Response(
+      *         response=500,
+      *         description="Internal server Error. Please contact us",    
+      *     )
+      * )
+      * @Get(RendezVousRestController::URI_RENDEZVOUS_COLLECTION)
+      */
     public function searchAll()
     {
         try {
@@ -56,7 +81,26 @@ class RendezVousRestController extends AbstractFOSRestController
         }
     }
     
-    /**
+    /** 
+     *@OA\Delete(
+     *     path="/rendezVous/{id}",
+     *     tags={"RendezVous"},
+     *     description="Delete an object of type RendezVous",
+     *     @OA\Parameter(
+     *          name="id",
+     *          in="path",
+     *          required=true,
+     *          @OA\Schema(type="number")
+     *     ),
+     *     @OA\Response(
+     *         response=204,
+     *         description="Successfully deleted"
+     *     ),
+     *      @OA\Response(
+     *         response=500,
+     *         description="Internal server Error. Please contact us",    
+     *     )
+     * )
      * @Delete(RendezVousRestController::URI_RENDEZVOUS_INSTANCE)
      *
      * @param [type] $id
@@ -70,7 +114,30 @@ class RendezVousRestController extends AbstractFOSRestController
             return View::create($e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR, ["Content-type" => "application/json"]);
         }
     }
-     /**
+    /** 
+     * @OA\Get(
+     *   path="/rendezVous/{id}",
+     *   tags={"RendezVous"},
+     *   @OA\Parameter(
+     *     name="id",
+     *     in="path",
+     *     required=true,
+     *     @OA\Schema(type="number")
+     *   ),
+     *   @OA\Response(
+     *     response="200",
+     *     description="The RDV",
+     *     @OA\JsonContent(ref="#/components/schemas/RendezVousDTO")
+     *   ),
+     *   @OA\Response(
+     *     response="500",
+     *     description="Internal server Error. Please contact us",
+     *   ),
+     *   @OA\Response(
+     *     response="404",
+     *     description="No RDV found for this id",
+     *   )
+     * )
      * @Get(RendezVousRestController::URI_RENDEZVOUS_INSTANCE)
      *
      * @return void

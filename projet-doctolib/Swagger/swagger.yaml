@@ -64,7 +64,7 @@ paths:
   '/patient/{id}':
     get:
       tags:
-        - id
+        - Patient
       operationId: 'App\Controller\PatientRestController::searchById'
       parameters:
         -
@@ -203,7 +203,7 @@ paths:
   '/praticien/{id}':
     get:
       tags:
-        - id
+        - Praticien
       operationId: 'App\Controller\PraticienRestController::searchById'
       parameters:
         -
@@ -282,6 +282,64 @@ paths:
           description: 'Successfully deleted'
         '500':
           description: 'Internal server Error. Please contact us'
+  /rendezVouss:
+    get:
+      tags:
+        - RendezVous
+      summary: 'Returns a list of RendezVousDTO'
+      description: 'Returns a list of RendezVousDTO'
+      operationId: 'App\Controller\RendezVousRestController::searchAll'
+      responses:
+        '200':
+          description: 'Successful operation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RendezVousDTO'
+        '404':
+          description: 'If no RendezVousDTO found'
+        '500':
+          description: 'Internal server Error. Please contact us'
+  '/rendezVous/{id}':
+    get:
+      tags:
+        - RendezVous
+      operationId: 'App\Controller\RendezVousRestController::searchById'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: 'The RDV'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RendezVousDTO'
+        '500':
+          description: 'Internal server Error. Please contact us'
+        '404':
+          description: 'No RDV found for this id'
+    delete:
+      tags:
+        - RendezVous
+      description: 'Delete an object of type RendezVous'
+      operationId: 'App\Controller\RendezVousRestController::remove'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '204':
+          description: 'Successfully deleted'
+        '500':
+          description: 'Internal server Error. Please contact us'
 components:
   schemas:
     PatientDTO:
@@ -302,5 +360,14 @@ components:
         nom:
           type: string
         specialite:
+          type: string
+      type: object
+    RendezVousDTO:
+      properties:
+        id:
+          type: number
+        date:
+          type: string
+        adresse:
           type: string
       type: object
