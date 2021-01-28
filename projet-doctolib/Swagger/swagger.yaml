@@ -300,6 +300,42 @@ paths:
           description: 'If no RendezVousDTO found'
         '500':
           description: 'Internal server Error. Please contact us'
+    post:
+      tags:
+        - RendezVous
+      summary: 'Add a new RendezVousDTO'
+      description: 'Create a object of type RendezVousDTO'
+      operationId: 'App\Controller\RendezVousRestController::create'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                date:
+                  type: string
+                adresse:
+                  type: string
+                patient:
+                  type: number
+                praticien:
+                  type: number
+              type: object
+              example:
+                date: '2021-01-12T10:46:59+01:00'
+                adresse: '13 Boulevard de l''exemple'
+                patient: 0
+                praticien: 0
+      responses:
+        '405':
+          description: 'Invalid request body'
+        '201':
+          description: 'Successfully created'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PraticienDTO'
+        '500':
+          description: 'Internal server Error. Please contact us'
   '/rendezVous/{id}':
     get:
       tags:
@@ -340,6 +376,56 @@ paths:
           description: 'Successfully deleted'
         '500':
           description: 'Internal server Error. Please contact us'
+  '/rendezVous/patient/{id}':
+    get:
+      tags:
+        - RendezVous
+      summary: 'Return a list of RendezVousDTO from a patient id'
+      description: 'Return information about a RendezVousDTO'
+      operationId: 'App\Controller\RendezVousRestController::searchRdvByIdPatient'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: 'Rdvs from a patient id'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RendezVousDTO'
+        '500':
+          description: 'Internal server Error. Please contact us'
+        '404':
+          description: 'No user found for this id'
+  '/rendezVous/praticien/{id}':
+    get:
+      tags:
+        - RendezVous
+      summary: 'Return a list of RendezVousDTO from a praticien id'
+      description: 'Return information about a RendezVousDTO'
+      operationId: 'App\Controller\RendezVousRestController::searchRdvByIdPraticien'
+      parameters:
+        -
+          name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: 'RendezVous from a praticien id'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RendezVousDTO'
+        '500':
+          description: 'Internal server Error. Please contact us'
+        '404':
+          description: 'No user found for this id'
 components:
   schemas:
     PatientDTO:

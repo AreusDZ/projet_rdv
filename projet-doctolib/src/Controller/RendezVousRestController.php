@@ -7,6 +7,7 @@ use App\Entity\RendezVous;
 use App\Entity\RendezVousDTO;
 use FOS\RestBundle\View\View;
 use App\Mapper\RendezVousMapper;
+use OpenApi\Annotations as OA;
 use App\Service\RendezVousService;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Service\RendezVousServiceException;
@@ -156,6 +157,31 @@ class RendezVousRestController extends AbstractFOSRestController
     }
 
     /**
+     * @OA\Get(
+     *   path="/rendezVous/patient/{id}",
+     *   tags={"RendezVous"},
+     *   summary="Return a list of RendezVousDTO from a patient id",
+     *   description="Return information about a RendezVousDTO",
+     *   @OA\Parameter(
+     *     name="id",
+     *     in="path",
+     *     required=true,
+     *     @OA\Schema(type="number")
+     *   ),
+     *   @OA\Response(
+     *     response="200",
+     *     description="Rdvs from a patient id",
+     *     @OA\JsonContent(ref="#/components/schemas/RendezVousDTO")
+     *   ),
+     *   @OA\Response(
+     *     response="500",
+     *     description="Internal server Error. Please contact us",
+     *   ),
+     *   @OA\Response(
+     *     response="404",
+     *     description="No user found for this id",
+     *   )
+     * )
      * @Get(RendezVousRestController::URI_RENDEZVOUSPATIENT_INSTANCE)
      *
      * @return void
@@ -174,7 +200,32 @@ class RendezVousRestController extends AbstractFOSRestController
         }
     }
 
-    /**
+       /**
+     * @OA\Get(
+     *   path="/rendezVous/praticien/{id}",
+     *   tags={"RendezVous"},
+     *   summary="Return a list of RendezVousDTO from a praticien id",
+     *   description="Return information about a RendezVousDTO",
+     *   @OA\Parameter(
+     *     name="id",
+     *     in="path",
+     *     required=true,
+     *     @OA\Schema(type="number")
+     *   ),
+     *   @OA\Response(
+     *     response="200",
+     *     description="RendezVous from a praticien id",
+     *     @OA\JsonContent(ref="#/components/schemas/RendezVousDTO")
+     *   ),
+     *   @OA\Response(
+     *     response="500",
+     *     description="Internal server Error. Please contact us",
+     *   ),
+     *   @OA\Response(
+     *     response="404",
+     *     description="No user found for this id",
+     *   )
+     * )
      * @Get(RendezVousRestController::URI_RENDEZVOUSPRATICIEN_INSTANCE)
      *
      * @return void
@@ -193,7 +244,50 @@ class RendezVousRestController extends AbstractFOSRestController
         }
     }
 
-    /**
+     /**
+     * @OA\Post(
+     *     path="/rendezVouss",
+     *     tags={"RendezVous"},
+     *     summary="Add a new RendezVousDTO",
+     *     description="Create a object of type RendezVousDTO",
+     *     @OA\RequestBody(
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  @OA\Property(
+     *                      property="date",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="adresse",
+     *                      type="string"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="patient",
+     *                      type="number"
+     *                  ),
+     *                  @OA\Property(
+     *                      property="praticien",
+     *                      type="number"
+     *                  ),
+     *                  example={"date": "2021-01-12T10:46:59+01:00", "adresse": "13 Boulevard de l'exemple", "patient": 0, "praticien": 0}
+     *              )
+     *          )
+     *     ),
+     *     @OA\Response(
+     *         response=405,
+     *         description="Invalid request body"
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Successfully created", 
+     *         @OA\JsonContent(ref="#/components/schemas/PraticienDTO")   
+     *     ),
+     *      @OA\Response(
+     *         response=500,
+     *         description="Internal server Error. Please contact us",    
+     *     )
+     * )
      * @Post(RendezVousRestController::URI_RENDEZVOUS_COLLECTION)
      * @ParamConverter("rendezVousDTO", converter="fos_rest.request_body")
      * @return void
