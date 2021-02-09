@@ -30,6 +30,7 @@ class PraticienMapper {
 
     public function transformePraticienEntityToPraticienDto(Praticien $praticien): PraticienDTO{
         $praticienDTO = new PraticienDTO();
+        $praticienDTO->setId($praticien->getId());
         $praticienDTO->setNom($praticien->getNom());
         $praticienDTO->setSpecialite($praticien->getSpecialite());
         $praticienDTO->setEmail($praticien->getEmail());

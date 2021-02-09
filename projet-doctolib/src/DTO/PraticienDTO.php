@@ -46,6 +46,8 @@ class PraticienDTO extends User {
         $this->specialite = $specialite;
         return $this;
     }
-
+    public function setId(Int $id) :?Int {
+        return $this->id = $id;
+    }
   
 }

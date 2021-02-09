@@ -426,6 +426,27 @@ paths:
           description: 'Internal server Error. Please contact us'
         '404':
           description: 'No user found for this id'
+  '/user/{email}':
+    get:
+      tags:
+        - User
+      summary: 'Return a User object'
+      description: 'Return information about a UserDTO'
+      operationId: 'App\Controller\UserRestController::searchByEmail'
+      parameters:
+        -
+          name: email
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'The User'
+        '500':
+          description: 'Internal server Error. Please contact us'
+        '404':
+          description: 'No user found for this email'
 components:
   schemas:
     PatientDTO:
