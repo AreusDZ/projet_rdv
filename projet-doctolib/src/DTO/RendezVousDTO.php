@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+Use OpenApi\Annotations as OA;
 /**
  * @OA\Schema()
  */
@@ -23,9 +23,17 @@ class RendezVousDTO {
      * @var string
      */
     private $adresse;
-
+    
+    /**
+     * @OA\Property(type="number")
+     * @var int
+     */
     private $patient;
 
+    /**
+     * @OA\Property(type="number")
+     * @var int
+     */
     private $praticien;
 
     
